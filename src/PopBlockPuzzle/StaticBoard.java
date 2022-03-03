@@ -17,7 +17,10 @@ public class StaticBoard extends Board {
                     addTile(factory.create("bomb", this), new Point(i, j));
                 }
                 else if (i*j%5 == 0){
-                    addTile(factory.create("red",  this),new Point(i, j));
+                    addTile(factory.create("green",  this),new Point(i, j));
+                }
+                else if((i+j)%7 == 0){
+                    addTile(factory.create("yellow",  this),new Point(i, j));
                 }
                 else {
                     addTile(factory.create("blue",  this),new Point(i, j));

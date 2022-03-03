@@ -10,7 +10,7 @@ public class Tester {
     public static void main(String[] args){
         JFrame frame = new JFrame("Tester");
         frame.setLayout(new BorderLayout());
-        frame.setSize(1000, 650);
+        frame.setSize(1400, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

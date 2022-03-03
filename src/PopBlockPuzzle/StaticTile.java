@@ -38,7 +38,7 @@ public class StaticTile extends Tile {
 
     @Override
     public Boolean isMatch(Tile other){
-        return this.getValue() == other.getValue();
+        return this.getValue().equals(other.getValue());
     }
 
     @Override

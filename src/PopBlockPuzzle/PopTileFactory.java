@@ -16,16 +16,16 @@ public class PopTileFactory extends TileFactory {
     @Override
     public Tile create(String type, Board board) {
         if(type.equals("bomb")){
-            return new BombTile(board, Color.yellow, "BOMB");
+            return new BombTile(board, new Color(230,66,112), "B");
         }
-        else if(type.equals("red")){
-            return new StaticTile(board, Color.red, "");
+        else if(type.equals("green")){
+            return new StaticTile(board, new Color(100,193, 189), "");
         }
-        else if(type.equals("blue")){
-            return new StaticTile(board, Color.blue, "");
+        else if(type.equals("yellow")){
+            return new StaticTile(board, new Color(234,215, 98), "");
         }
         else {
-            return new StaticTile(board, Color.white, "");
+            return new StaticTile(board, new Color(227,230, 232), "");
         }
     }
 }
