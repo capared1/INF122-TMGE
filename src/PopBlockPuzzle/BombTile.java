@@ -21,6 +21,7 @@ public class BombTile extends Tile {
 
                     board.grid[coord.x + i][coord.y + j].setEnabled(false);
                     board.grid[coord.x + i][coord.y + j].setBackground(Color.GRAY);
+                    board.remainingTiles--;
 
                     if (board.grid[coord.x + i][coord.y + j].isMatch(this)) {
                         board.grid[coord.x + i][coord.y + j].trigger();

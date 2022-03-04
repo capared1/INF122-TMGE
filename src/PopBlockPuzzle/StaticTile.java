@@ -22,6 +22,7 @@ public class StaticTile extends Tile {
             }
             if (board.grid[x][y].isMatch(this)){
                 board.grid[x][y].setEnabled(false);
+                board.remainingTiles--;
                 board.grid[x][y].setBackground(Color.GRAY);
                 pop(x + 1, y);
                 pop(x - 1, y);

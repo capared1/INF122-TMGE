@@ -6,9 +6,12 @@ import java.awt.*;
 public abstract class Board {
 
     public Tile [][] grid;
+    public int remainingTiles;
+    public String playerName;
     protected JPanel boardPanel;
     protected Point size;
     protected TileFactory factory;
+
 
     public abstract void setup();
     public abstract void update();
@@ -28,5 +31,6 @@ public abstract class Board {
         this.factory = factory;
         this.grid = new Tile[size.y][size.x];
         this.boardPanel = new JPanel(new GridLayout(size.y, size.y));
+        this.remainingTiles = size.x * size.y;
     }
 }
