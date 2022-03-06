@@ -226,7 +226,7 @@ public class KlaxBoard extends Board
                         if (Arrays.equals(order,[0,1,2,3]) || Arrays.equals(order,[1,2,3,4]))
                         {
                             retFlag = true;
-                            retArray.push(order);
+                            retArray.push(row);
                         }
                     }
                     else
@@ -234,7 +234,7 @@ public class KlaxBoard extends Board
                         if(Arrays.equals(order,[0,1,2]) || Arrays.equals(order,[1,2,3]) || Arrays.equals(order,[2,3,4]))
                         {
                             retFlag = true;
-                            retArray.push(order);
+                            retArray.push(row);
                         }
                     }
                 }
@@ -312,7 +312,7 @@ public class KlaxBoard extends Board
                         if (Arrays.equals(order,[0,1,2,3]) || Arrays.equals(order,[1,2,3,4]))
                         {
                             retFlag = true;
-                            retArray.push(order);
+                            retArray.push(col);
                         }
                     }
                     else
@@ -320,7 +320,7 @@ public class KlaxBoard extends Board
                         if(Arrays.equals(order,[0,1,2]) || Arrays.equals(order,[1,2,3]) || Arrays.equals(order,[2,3,4]))
                         {
                             retFlag = true;
-                            retArray.push(order);
+                            retArray.push(col);
                         }
                     }
                 }
