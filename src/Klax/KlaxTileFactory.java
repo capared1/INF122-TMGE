@@ -32,7 +32,7 @@ public class KlaxTileFactory extends TileFactory {
         {
             return new Tile(board, new Color(173,178,211), "");  //  Wild Blue Yonder
         }
-        else if (type.equals("drop"))   //  Drop Zone
+        else if (type.equals("dump"))   //  Dump Zone
         {
             return new Tile(board, new Color(22,22,29), "");  //  Eigengrau
         }

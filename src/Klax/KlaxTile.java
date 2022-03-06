@@ -61,4 +61,9 @@ public class KlaxTile extends Tile
         }
         return colorSel;
     }
+
+    public Color getColor()
+    {
+        return this.color;
+    }
 }

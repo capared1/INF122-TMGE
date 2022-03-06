@@ -12,7 +12,7 @@ public class KlaxWildTile extends KlaxTile
         super(board, color, Label);
     }
 
-    public colorIncrement() //  Called everytime the tile goes down the Y-Axis?
+    public colorIncrement() //  Called every time the tile goes down the Y-Axis?
     {
         if (this.colorID < 9)
         {
@@ -24,5 +24,11 @@ public class KlaxWildTile extends KlaxTile
         }
         this.color = setColor();
         this.tilePanel.setBackground(this.color);
+    }
+
+    @Override
+    public Color getColor()
+    {
+        return null;
     }
 }
