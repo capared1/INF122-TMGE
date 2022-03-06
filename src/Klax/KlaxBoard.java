@@ -3,6 +3,7 @@ package Klax;
 import TMGE.*;
 
 import java.awt.*;
+import java.util.*;
 
 public class KlaxBoard extends Board
 {
@@ -143,8 +144,8 @@ public class KlaxBoard extends Board
                 KlaxTile[] value = ArrayUtils.addAll(entry.getValue(), dumpZone.get(null)); //  Merge Wilds
                 if (value.length > 2)   //  Matches only start 3+
                 {
-                    for (int i = 0; i < value.length; i++)
-                    {
+                    for (int i = 0; i < value.length; i++)  //  Check all possible combos, tally them up, and then destroy
+                    {  
                         Array<boolean, Array<KlaxTile[]>> horiz = checkHoriz(value);
                         Array<boolean, Array<KlaxTile[]>> vert = checkVert(value);
                         Array<boolean, Array<KlaxTile[]>> diag = checkDiag(value);
