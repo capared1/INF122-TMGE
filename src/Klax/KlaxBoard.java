@@ -7,8 +7,8 @@ import java.util.*;
 
 public class KlaxBoard extends Board
 {
-    public points = 0;
-    public dropMeter = 5;   //  Game over if 0
+    public int points = 0;  //  Should we make it a Long variable instead of Integer?
+    public int dropMeter = 5;   //  Game over if 0
     protected Tile[][] boardStripped;
     protected Tile[] falling;
     //protected Map<Color, KlaxTile[]> dumpZone;
@@ -112,7 +112,7 @@ public class KlaxBoard extends Board
                     dropped(i);
                 }
             }
-            this.grid[currCoord.getY()][currCoord.getX()] = this.boardStripped[currCoord.getY()][currCoord.getX()]; //  Cleans original spot of Tile
+            cleanGridEntry(currCoord); //  Cleans original spot of Tile
         }
     }
 
@@ -127,19 +127,31 @@ public class KlaxBoard extends Board
     {}
 
     public void dump()    //  When Paddle puts top stack Tile down into Dump Zone
-    {
-        //this.dumpZone.add
-    }
+    {}
 
-    public void patternCheck()  //  NEED TO FINISH
+    public void patternCheck()
     {   //  Called to see if a Klax Pattern is made in Dump Zone
         HashSet<KlaxTile> combos = new HashSet<KlaxTile>();
         HashSet<KlaxTile> buffer = new HashSet<KlaxTile>();
-        buffer = checkHoriz();
-        combos.addAll(checkHoriz());
-
-        combos.addAll(checkVert());
-        combos.addAll(checkDiag());
+        {   //  Horizontal
+            buffer = checkHoriz();
+            meritPoints(0, buffer.size());
+            combos.addAll(buffer);
+        }
+        {   //  Vertical
+            buffer = checkVert();
+            meritPoints(1, buffer.size());
+            combos.addAll(buffer);
+        }
+        {   //  Diagonal
+            buffer = checkDiag();
+            meritPoints(2, buffer.size());
+            combos.addAll(buffer);
+        }
+        for(KlaxTile tile : combos) //  Iterate to delete all matched tiles
+        {
+            cleanGridEntry(tile.getCoord());
+        }
     }
 
     protected HashSet<KlaxTile> checkHoriz()
@@ -324,6 +336,7 @@ public class KlaxBoard extends Board
                 }
             }
         }
+    }
 
 /*
     //  Individual Diagonal Checks (Merged into one function above)
@@ -639,67 +652,57 @@ public class KlaxBoard extends Board
     }
 */
 
-    protected int meritPoints(int setting, int tileSum)
+    protected void meritPoints(int setting, int tileSum)
     {
-        int count = tileSum;
         int total = 0;
-        while (count != 0)
-        {
+        int five = 0;
+        int four = 0;
+        int three = 0;
+        {   //  Settings
             if (setting == 0)   //  Horizontal
             {
-                if ( ((count % 5) == 0) || ((count % 5) > 2) )
-                {
-                    total += (count / 5) * 10000;
-                    count = count % 5;
-                }
-                if ( ((count % 4) == 0) || ((count % 4) > 2) )
-                {
-                    total += (count / 4) * 5000;
-                    count = count % 4;
-                }
-                if ((count % 3) == 0)
-                {
-                    total += (count / 3) * 1000;
-                    count = count % 3;
-                }
+                five = 10000;
+                four = 5000;
+                three = 1000;
             }
             else if (setting == 1)   //  Vertical
             {
-                if ( ((count % 5) == 0) || ((count % 5) > 2) )
-                {
-                    total += (count / 5) * 15000;
-                    count = count % 5;
-                }
-                if ( ((count % 4) == 0) || ((count % 4) > 2) )
-                {
-                    total += (count / 4) * 10000;
-                    count = count % 4;
-                }
-                if ((count % 3) == 0)
-                {
-                    total += (count / 3) * 50;
-                    count = count % 3;
-                }
+                five = 15000;
+                four = 10000;
+                three = 50;
             }
             else if (setting == 2)   //  Diagonal
             {
-                if ( ((count % 5) == 0) || ((count % 5) > 2) )
-                {
-                    total += (count / 5) * 20000;
-                    count = count % 5;
-                }
-                if ( ((count % 4) == 0) || ((count % 4) > 2) )
-                {
-                    total += (count / 4) * 10000;
-                    count = count % 4;
-                }
-                if ((count % 3) == 0)
-                {
-                    total += (count / 3) * 5000;
-                    count = count % 3;
-                }
+                five = 20000;
+                four = 10000;
+                three = 5000;
             }
         }
+        {   //  Calculate
+            int count = tileSum;
+            if ( ((count % 5) == 0) || ((count % 5) > 2) )
+            {
+                total += (count / 5) * five;
+                count = count % 5;
+            }
+            if ( ((count % 4) == 0) || ((count % 4) > 2) )
+            {
+                total += (count / 4) * four;
+                count = count % 4;
+            }
+            if ((count % 3) == 0)
+            {
+                total += (count / 3) * three;
+                count = count % 3;
+            }
+        }
+        this.points += total;
+    }
+
+    protected void cleanGridEntry(Point currCoord)
+    {
+        //  Didn't use addTile since the coordinate doesn't change
+        this.grid[currCoord.getY()][currCoord.getX()] = this.boardStripped[currCoord.getY()][currCoord.getX()];
     }
 
 }
