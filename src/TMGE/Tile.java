@@ -26,8 +26,18 @@ public abstract class Tile {
         this.coord = coord;
     }
 
-    public Point getCoord(Point coord){
+    public Point getCoord(){
         return this.coord;
+    }
+
+    public Color setColor(Color _color)
+    {
+        this.color = _color;
+    }
+
+    public Color getColor()
+    {
+        return this.color;
     }
 
     public boolean isEnabled(){
