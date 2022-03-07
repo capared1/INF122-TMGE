@@ -645,58 +645,60 @@ public class KlaxBoard extends Board
         int total = 0;
         while (count != 0)
         {
-            //
             if (setting == 0)   //  Horizontal
             {
-                if ((count % 5) == 0) || ((count % 5) > 2)
+                if ( ((count % 5) == 0) || ((count % 5) > 2) )
                 {
                     total += (count / 5) * 10000;
                     count = count % 5;
                 }
-                else if ((tileSum % 4) == 0)
+                if ( ((count % 4) == 0) || ((count % 4) > 2) )
                 {
-                    this.points += (tileSum/4) * 5000;
+                    total += (count / 4) * 5000;
+                    count = count % 4;
                 }
-                /*
-                if (tileSum == 3)
+                if ((count % 3) == 0)
                 {
-                    this.points += 1000;
+                    total += (count / 3) * 1000;
+                    count = count % 3;
                 }
-                else if (tileSum == 4)
-                {
-                    this.points += 5000;
-                }
-                else if (tileSum == 5)
-                {
-                    this.points += 10000;
-                }
-                else
-                {
-                    this.points += (tileSum - 3) * 5000;
-                }
-                */
             }
             else if (setting == 1)   //  Vertical
             {
-                if (tileSum == 3)
+                if ( ((count % 5) == 0) || ((count % 5) > 2) )
                 {
-                    this.points += 50;
+                    total += (count / 5) * 15000;
+                    count = count % 5;
                 }
-                else if (tileSum == 4)
+                if ( ((count % 4) == 0) || ((count % 4) > 2) )
                 {
-                    this.points += 10000;
+                    total += (count / 4) * 10000;
+                    count = count % 4;
                 }
-                else if (tileSum == 5)
+                if ((count % 3) == 0)
                 {
-                    this.points += 15000;
-                }
-                else
-                {
-                    this.points += (tileSum - 3) * 5000;
+                    total += (count / 3) * 50;
+                    count = count % 3;
                 }
             }
             else if (setting == 2)   //  Diagonal
-            {}
+            {
+                if ( ((count % 5) == 0) || ((count % 5) > 2) )
+                {
+                    total += (count / 5) * 20000;
+                    count = count % 5;
+                }
+                if ( ((count % 4) == 0) || ((count % 4) > 2) )
+                {
+                    total += (count / 4) * 10000;
+                    count = count % 4;
+                }
+                if ((count % 3) == 0)
+                {
+                    total += (count / 3) * 5000;
+                    count = count % 3;
+                }
+            }
         }
     }
 
