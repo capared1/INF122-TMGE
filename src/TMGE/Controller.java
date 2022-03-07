@@ -46,8 +46,7 @@ public class Controller {
         cardPanel.add(hp.getPanel(), "HOME");
 
         for(Game g : games){
-            JPanel gamePanel = new JPanel(new GridLayout(1,2));
-            gamePanel.add(factory.create(g.getName()).getGamePanel());
+            JPanel gamePanel = new JPanel(new GridLayout(1,1));
             gamePanel.add(factory.create(g.getName()).getGamePanel());
             cardPanel.add(gamePanel, g.toString());
         }

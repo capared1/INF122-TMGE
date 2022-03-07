@@ -8,9 +8,10 @@ import java.util.ArrayList;
 public class Tester {
 
     public static void main(String[] args){
+        int size = 700;
         JFrame frame = new JFrame("Tester");
         frame.setLayout(new BorderLayout());
-        frame.setSize(1400, 700);
+        frame.setSize(size, size);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

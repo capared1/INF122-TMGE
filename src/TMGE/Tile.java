@@ -52,10 +52,6 @@ public abstract class Tile {
             @Override
             public void actionPerformed(ActionEvent e) {
                 trigger();
-                System.out.println(board.remainingTiles);
-                if(board.remainingTiles == 0){
-                    System.out.println(board.playerName + "wins!");
-                }
             }
         });
     }

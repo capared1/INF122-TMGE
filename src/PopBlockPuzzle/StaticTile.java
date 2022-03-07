@@ -12,7 +12,21 @@ public class StaticTile extends Tile {
 
     @Override
     public void trigger() {
+        int startTiles = board.remainingTiles;
         pop(coord.x, coord.y);
+        int pointsScored = startTiles - board.remainingTiles;
+        if(board.p1Turn){
+            board.scoreboard.put("P1", board.scoreboard.get("P1") + pointsScored);
+        }
+        else{
+            board.scoreboard.put("P2", board.scoreboard.get("P2") + pointsScored);
+        }
+        board.p1Turn = !board.p1Turn;
+        System.out.println("P1 score: " + board.scoreboard.get("P1") + " | P2 score: " + board.scoreboard.get("P2"));
+        if(board.remainingTiles == 0){
+            String winner = board.scoreboard.get("P1") > board.scoreboard.get("P2") ? "P1" : "P2";
+            System.out.println(winner + " wins with " + board.scoreboard.get(winner));
+        }
     }
 
     void pop(int x, int y){
