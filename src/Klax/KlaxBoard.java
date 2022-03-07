@@ -7,10 +7,11 @@ import java.util.*;
 
 public class KlaxBoard extends Board
 {
+    public points = 0;
     public dropMeter = 5;   //  Game over if 0
     protected Tile[][] boardStripped;
     protected Tile[] falling;
-    protected Map<Color, KlaxTile[]> dumpZone;
+    //protected Map<Color, KlaxTile[]> dumpZone;
 
     public KlaxBoard(Point size = new Point(5,31))    //  20 for Top; 6 for Paddle; 5 for Dump
     {
@@ -130,9 +131,301 @@ public class KlaxBoard extends Board
         //this.dumpZone.add
     }
 
-//  Everything below this point gets into absolute pattern matching hell.
-//  If anyone has a smart idea of trying to match up all the possible combos then please implement
-//  It's reaching such a messy point that I barely can wrap my head around my own code anymore
+    public void patternCheck()  //  NEED TO FINISH
+    {   //  Called to see if a Klax Pattern is made in Dump Zone
+        HashSet<KlaxTile> combos = new HashSet<KlaxTile>();
+        HashSet<KlaxTile> buffer = new HashSet<KlaxTile>();
+        buffer = checkHoriz();
+        combos.addAll(checkHoriz());
+
+        combos.addAll(checkVert());
+        combos.addAll(checkDiag());
+    }
+
+    protected HashSet<KlaxTile> checkHoriz()
+    {
+        HashSet<KlaxTile> out = new HashSet<KlaxTile>();
+        for (int i = 0; i < 5; i++)  //  Y; (Max 5 because Dump Zone only)
+        {
+            for (int j = 0 ; j < size.x; j++)
+            {
+                if (j == 0) //  5
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i][j+1]))
+                        && (this.grid[i][j+1].compColor(this.grid[i][j+2]))
+                        && (this.grid[i][j+2].compColor(this.grid[i][j+3]))
+                        && (this.grid[i][j+3].compColor(this.grid[i][j+4])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i][j+1]);
+                        out.add(this.grid[i][j+2]);
+                        out.add(this.grid[i][j+3]);
+                        out.add(this.grid[i][j+4]);
+                    }
+                }
+                if (j <= 1) //  4
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i][j+1]))
+                        && (this.grid[i][j+1].compColor(this.grid[i][j+2]))
+                        && (this.grid[i][j+2].compColor(this.grid[i][j+3])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i][j+1]);
+                        out.add(this.grid[i][j+2]);
+                        out.add(this.grid[i][j+3]);
+                    }
+                }
+                if (j <= 2) //  3
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i][j+1]))
+                        && (this.grid[i][j+1].compColor(this.grid[i][j+2])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i][j+1]);
+                        out.add(this.grid[i][j+2]);
+                    }
+                }
+            }
+        }
+    }
+
+    protected HashSet<KlaxTile> checkVert()
+    {
+        HashSet<KlaxTile> out = new HashSet<KlaxTile>();
+        for (int j = 0 ; j < size.x; j++)
+        {
+            for (int i = 0; i < 5; i++)  //  Y; (Max 5 because Dump Zone only)
+            {
+                if (i == 0) //  5
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j]))
+                        && (this.grid[i+1][j].compColor(this.grid[i+2][j]))
+                        && (this.grid[i+2][j].compColor(this.grid[i+3][j]))
+                        && (this.grid[i+3][j].compColor(this.grid[i+4][j])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j]);
+                        out.add(this.grid[i+2][j]);
+                        out.add(this.grid[i+3][j]);
+                        out.add(this.grid[i+4][j]);
+                    }
+                }
+                if (i <= 1) //  4
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j]))
+                        && (this.grid[i+1][j].compColor(this.grid[i+2][j]))
+                        && (this.grid[i+2][j].compColor(this.grid[i+3][j])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j]);
+                        out.add(this.grid[i+2][j]);
+                        out.add(this.grid[i+3][j]);
+                    }
+                }
+                if (i <= 2) //  3
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j]))
+                        && (this.grid[i+1][j].compColor(this.grid[i+2][j])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j]);
+                        out.add(this.grid[i+2][j]);
+                    }
+                }
+            }
+        }
+    }
+
+    protected HashSet<KlaxTile> checkDiag()
+    {
+        HashSet<KlaxTile> out = new HashSet<KlaxTile>();
+        for (int i = 0; i < 5; i++)  //  Y; (Max 5 because Dump Zone only)
+        {
+            {   //  Checking Left To Right
+                for (int j = 0 ; j < size.x; j++)
+                {
+                    if (j == 0) //  5
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                            && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2]))
+                            && (this.grid[i+2][j+2].compColor(this.grid[i+3][j+3]))
+                            && (this.grid[i+3][j+3].compColor(this.grid[i+4][j+4])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j+1]);
+                            out.add(this.grid[i+2][j+2]);
+                            out.add(this.grid[i+3][j+3]);
+                            out.add(this.grid[i+4][j+4]);
+                        }
+                    }
+                    if (j <= 1) //  4
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                            && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2]))
+                            && (this.grid[i+2][j+2].compColor(this.grid[i+3][j+3])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j+1]);
+                            out.add(this.grid[i+2][j+2]);
+                            out.add(this.grid[i+3][j+3]);
+                        }
+                    }
+                    if (j <= 2) //  3
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                            && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j+1]);
+                            out.add(this.grid[i+2][j+2]);
+                        }
+                    }
+                }
+            }
+            {   //  Checking Right To Left
+                for (int j = size.x - 1 ; j >= 0; j--)
+                {
+                    if (j == 4) //  5
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                            && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2]))
+                            && (this.grid[i+2][j-2].compColor(this.grid[i+3][j-3]))
+                            && (this.grid[i+3][j-3].compColor(this.grid[i+4][j-4])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j-1]);
+                            out.add(this.grid[i+2][j-2]);
+                            out.add(this.grid[i+3][j-3]);
+                            out.add(this.grid[i+4][j-4]);
+                        }
+                    }
+                    if (j >= 3) //  4
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                            && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2]))
+                            && (this.grid[i+2][j-2].compColor(this.grid[i+3][j-3])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j-1]);
+                            out.add(this.grid[i+2][j-2]);
+                            out.add(this.grid[i+3][j-3]);
+                        }
+                    }
+                    if (j >= 2) //  3
+                    {
+                        if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                            && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2])) )
+                        {
+                            out.add(this.grid[i][j]);
+                            out.add(this.grid[i+1][j-1]);
+                            out.add(this.grid[i+2][j-2]);
+                        }
+                    }
+                }
+            }
+        }
+
+/*
+    //  Individual Diagonal Checks (Merged into one function above)
+    protected HashSet<KlaxTile> checkDiag_LtoR()
+    {
+        HashSet<KlaxTile> out = new HashSet<KlaxTile>();
+        for (int i = 0; i < 5; i++)  //  Y; (Max 5 because Dump Zone only)
+        {
+            for (int j = 0 ; j < size.x; j++)
+            {
+                if (j == 0) //  5
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                        && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2]))
+                        && (this.grid[i+2][j+2].compColor(this.grid[i+3][j+3]))
+                        && (this.grid[i+3][j+3].compColor(this.grid[i+4][j+4])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j+1]);
+                        out.add(this.grid[i+2][j+2]);
+                        out.add(this.grid[i+3][j+3]);
+                        out.add(this.grid[i+4][j+4]);
+                    }
+                }
+                if (j <= 1) //  4
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                        && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2]))
+                        && (this.grid[i+2][j+2].compColor(this.grid[i+3][j+3])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j+1]);
+                        out.add(this.grid[i+2][j+2]);
+                        out.add(this.grid[i+3][j+3]);
+                    }
+                }
+                if (j <= 2) //  3
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j+1]))
+                        && (this.grid[i+1][j+1].compColor(this.grid[i+2][j+2])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j+1]);
+                        out.add(this.grid[i+2][j+2]);
+                    }
+                }
+            }
+        }
+    }
+
+    protected HashSet<KlaxTile> checkDiag_RtoL()
+    {
+        HashSet<KlaxTile> out = new HashSet<KlaxTile>();
+        for (int i = 0; i < 5; i++)  //  Y; (Max 5 because Dump Zone only)
+        {
+            for (int j = size.x - 1 ; j >= 0; j--)
+            {
+                if (j == 4) //  5
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                        && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2]))
+                        && (this.grid[i+2][j-2].compColor(this.grid[i+3][j-3]))
+                        && (this.grid[i+3][j-3].compColor(this.grid[i+4][j-4])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j-1]);
+                        out.add(this.grid[i+2][j-2]);
+                        out.add(this.grid[i+3][j-3]);
+                        out.add(this.grid[i+4][j-4]);
+                    }
+                }
+                if (j >= 3) //  4
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                        && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2]))
+                        && (this.grid[i+2][j-2].compColor(this.grid[i+3][j-3])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j-1]);
+                        out.add(this.grid[i+2][j-2]);
+                        out.add(this.grid[i+3][j-3]);
+                    }
+                }
+                if (j >= 2) //  3
+                {
+                    if ( (this.grid[i][j].compColor(this.grid[i+1][j-1]))
+                        && (this.grid[i+1][j-1].compColor(this.grid[i+2][j-2])) )
+                    {
+                        out.add(this.grid[i][j]);
+                        out.add(this.grid[i+1][j-1]);
+                        out.add(this.grid[i+2][j-2]);
+                    }
+                }
+            }
+        }
+    }
+*/
+
+/*
+    //  Everything below this point gets into absolute pattern matching hell.
+    //  If anyone has a smart idea of trying to match up all the possible combos then please implement
+    //  It's reaching such a messy point that I barely can wrap my head around my own code anymore
 
     public void patternCheck()  //  NEED TO FINISH
     {   //  Called to see if a Klax Pattern is made in Dump Zone
@@ -339,7 +632,72 @@ public class KlaxBoard extends Board
         }
         else
         {
-            //
+            KlaxTile[] order = input.sort(Comparator.comparing(KlaxTile::getCoord.getX));
+            order.sort(Comparator.comparing(KlaxTile::getCoord.getX));
+            //.sort(Comparator.comparing(Point::getX));
         }
     }
+*/
+
+    protected int meritPoints(int setting, int tileSum)
+    {
+        int count = tileSum;
+        int total = 0;
+        while (count != 0)
+        {
+            //
+            if (setting == 0)   //  Horizontal
+            {
+                if ((count % 5) == 0) || ((count % 5) > 2)
+                {
+                    total += (count / 5) * 10000;
+                    count = count % 5;
+                }
+                else if ((tileSum % 4) == 0)
+                {
+                    this.points += (tileSum/4) * 5000;
+                }
+                /*
+                if (tileSum == 3)
+                {
+                    this.points += 1000;
+                }
+                else if (tileSum == 4)
+                {
+                    this.points += 5000;
+                }
+                else if (tileSum == 5)
+                {
+                    this.points += 10000;
+                }
+                else
+                {
+                    this.points += (tileSum - 3) * 5000;
+                }
+                */
+            }
+            else if (setting == 1)   //  Vertical
+            {
+                if (tileSum == 3)
+                {
+                    this.points += 50;
+                }
+                else if (tileSum == 4)
+                {
+                    this.points += 10000;
+                }
+                else if (tileSum == 5)
+                {
+                    this.points += 15000;
+                }
+                else
+                {
+                    this.points += (tileSum - 3) * 5000;
+                }
+            }
+            else if (setting == 2)   //  Diagonal
+            {}
+        }
+    }
+
 }

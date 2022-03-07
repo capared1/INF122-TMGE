@@ -17,6 +17,12 @@ public class KlaxTile extends Tile
         super(board, colorSel, Label);
     }
 
+    @Override
+    public Point getCoord()
+    {
+        return this.coord;
+    }
+
     public Color setColor()    //  Selecting 1/10 possible colors
     {
         if (this.colorID == 0)
@@ -65,5 +71,17 @@ public class KlaxTile extends Tile
     public Color getColor()
     {
         return this.color;
+    }
+
+    public boolean compColor(KlaxTile input)
+    {
+        if (input instanceof KlaxWildTile)
+        {
+            return true;
+        }
+        else
+        {
+            return (this.color).equals(input.color);
+        }
     }
 }

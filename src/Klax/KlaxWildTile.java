@@ -31,4 +31,10 @@ public class KlaxWildTile extends KlaxTile
     {
         return null;
     }
+
+    @Override
+    public boolean compColor(KlaxTile input)
+    {
+        return true;
+    }
 }
