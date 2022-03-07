@@ -13,17 +13,11 @@ public class KlaxTile extends Tile
     {
         Random randomizer = new Random();
         this.colorID = randomizer.nextInt(10);
-        Color colorSel = setColor();
+        Color colorSel = setColorRandom();
         super(board, colorSel, Label);
     }
 
-    @Override
-    public Point getCoord()
-    {
-        return this.coord;
-    }
-
-    public Color setColor()    //  Selecting 1/10 possible colors
+    public Color setColorRandom()    //  Selecting 1/10 possible colors
     {
         if (this.colorID == 0)
         {
@@ -66,11 +60,6 @@ public class KlaxTile extends Tile
             colorSel = new Color(186, 216, 10);  //  Lime 382
         }
         return colorSel;
-    }
-
-    public Color getColor()
-    {
-        return this.color;
     }
 
     public boolean compColor(KlaxTile input)

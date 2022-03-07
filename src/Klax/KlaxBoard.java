@@ -704,5 +704,4 @@ public class KlaxBoard extends Board
         //  Didn't use addTile since the coordinate doesn't change
         this.grid[currCoord.getY()][currCoord.getX()] = this.boardStripped[currCoord.getY()][currCoord.getX()];
     }
-
 }
