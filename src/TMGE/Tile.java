@@ -30,7 +30,7 @@ public abstract class Tile {
         return this.coord;
     }
 
-    public Color setColor(Color _color)
+    public void setColor(Color _color)
     {
         this.color = _color;
     }
